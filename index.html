@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>هم‌همه | قانون جدید خرید</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --red: #E8332A;
+    --red-deep: #C41E1E;
+    --red-soft: #FFF1EF;
+    --white: #FFFFFF;
+    --gray-light: #F6F6F7;
+    --gray: #8A8A8E;
+    --ink: #1A1A1C;
+    --line: #ECECEE;
+    --shadow: 0 20px 50px -20px rgba(20,20,20,0.15);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Vazirmatn', sans-serif;
+    background:var(--white);
+    color:var(--ink);
+    overflow-x:hidden;
+    line-height:1.7;
+  }
+  img,svg{display:block;}
+  a{text-decoration:none;color:inherit;}
+  .container{
+    max-width:1180px;
+    margin:0 auto;
+    padding:0 24px;
+  }
+
+  /* floating ambient blobs */
+  .blob{
+    position:fixed;
+    border-radius:50%;
+    filter:blur(70px);
+    opacity:.35;
+    z-index:0;
+    pointer-events:none;
+    animation:float 16s ease-in-out infinite;
+  }
+  .blob1{width:420px;height:420px;background:var(--red);top:-120px;left:-120px;opacity:.10;animation-duration:20s;}
+  .blob2{width:340px;height:340px;background:var(--red);bottom:5%;right:-100px;opacity:.08;animation-duration:24s;animation-delay:-6s;}
+  .blob3{width:260px;height:260px;background:#FFD9D6;top:40%;left:45%;opacity:.25;animation-duration:18s;animation-delay:-3s;}
+  @keyframes float{
+    0%,100%{transform:translate(0,0) scale(1);}
+    33%{transform:translate(30px,-40px) scale(1.06);}
+    66%{transform:translate(-25px,25px) scale(0.96);}
+  }
+
+  /* ===== NAV ===== */
+.top-bar{
+    position:fixed;top:0;left:0;right:0;
+    z-index:101;
+    text-align:center;
+    background:var(--ink);
+    color:var(--white);
+    font-size:13px;font-weight:700;
+    padding:8px 0;
+    letter-spacing:.3px;
+  }
+  nav{
+    position:fixed;top:34px;left:0;right:0;
+    z-index:100;
+    padding:18px 0;
+    transition:all .35s ease;
+  }
+  nav.scrolled{
+    background:rgba(255,255,255,.75);
+    backdrop-filter:blur(16px) saturate(160%);
+    -webkit-backdrop-filter:blur(16px) saturate(160%);
+    box-shadow:0 1px 0 var(--line);
+  }
+  .nav-inner{
+    display:flex;align-items:center;justify-content:space-between;
+  }
+  .logo{
+    font-weight:900;font-size:22px;letter-spacing:-0.5px;
+    display:flex;align-items:center;gap:8px;
+  }
+  .logo-dot{width:9px;height:9px;border-radius:50%;background:var(--red);display:inline-block;}
+  .nav-cta{
+    background:var(--ink);color:var(--white);
+    padding:10px 22px;border-radius:100px;
+    font-size:14px;font-weight:600;
+    transition:transform .25s ease, background .25s ease;
+  }
+  .nav-cta:hover{background:var(--red);transform:translateY(-2px);}
+
+  /* ===== HERO ===== */
+  .hero{
+    position:relative;
+    min-height:100svh;
+    display:flex;align-items:center;
+    padding-top:144px;padding-bottom:60px;
+    z-index:1;
+  }
+  .hero-inner{
+    display:grid;
+    grid-template-columns:1.1fr 0.9fr;
+    gap:50px;
+    align-items:center;
+  }
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--red-soft);
+    color:var(--red-deep);
+    font-size:15px;font-weight:800;
+    padding:10px 20px;border-radius:100px;
+    margin-bottom:24px;
+    box-shadow:0 6px 18px -8px rgba(232,51,42,.35);
+    opacity:0;animation:fadeUp .8s ease forwards;
+  }
+  h1.hero-title{
+    font-size:clamp(32px,5vw,58px);
+    font-weight:800;
+    line-height:1.25;
+    letter-spacing:-1px;
+    margin-bottom:22px;
+    opacity:0;animation:fadeUp .8s ease forwards;
+    animation-delay:.1s;
+  }
+  h1.hero-title .accent{color:var(--red);position:relative;}
+  .hero-text{
+    font-size:18px;color:#4A4A4D;
+    max-width:480px;
+    margin-bottom:36px;
+    opacity:0;animation:fadeUp .8s ease forwards;
+    animation-delay:.2s;
+  }
+  .hero-ctas{
+    display:flex;gap:16px;align-items:center;flex-wrap:wrap;
+    opacity:0;animation:fadeUp .8s ease forwards;
+    animation-delay:.3s;
+  }
+  .btn-primary{
+    background:var(--red);
+    color:var(--white);
+    padding:16px 34px;
+    border-radius:100px;
+    font-weight:700;font-size:16px;
+    box-shadow:0 14px 30px -10px rgba(232,51,42,0.5);
+    transition:transform .25s ease, box-shadow .25s ease;
+    position:relative;
+    display:inline-flex;align-items:center;gap:8px;
+  }
+  .btn-primary:hover{transform:translateY(-3px);box-shadow:0 18px 36px -8px rgba(232,51,42,0.6);}
+  .btn-primary.pulse::after{
+    content:'';
+    position:absolute;inset:0;
+    border-radius:100px;
+    border:2px solid var(--red);
+    animation:pulse 2.4s ease-out infinite;
+  }
+  @keyframes pulse{
+    0%{transform:scale(1);opacity:.6;}
+    100%{transform:scale(1.35);opacity:0;}
+  }
+  .btn-ghost{
+    color:var(--ink);font-weight:600;font-size:15px;
+    display:flex;align-items:center;gap:6px;
+    padding:16px 8px;
+    transition:gap .25s ease, color .25s ease;
+  }
+  .btn-ghost:hover{gap:12px;color:var(--red);}
+
+  @keyframes fadeUp{
+    from{opacity:0;transform:translateY(22px);}
+    to{opacity:1;transform:translateY(0);}
+  }
+
+  /* hero visual: illustrated card stack */
+  .hero-visual{
+    position:relative;
+    height:480px;
+    opacity:0;animation:fadeUp 1s ease forwards;
+    animation-delay:.25s;
+  }
+  .float-card{
+    position:absolute;
+    background:rgba(255,255,255,.7);
+    backdrop-filter:blur(18px) saturate(180%);
+    -webkit-backdrop-filter:blur(18px) saturate(180%);
+    border:1px solid rgba(255,255,255,.6);
+    border-radius:24px;
+    box-shadow:var(--shadow);
+    animation:bob 6s ease-in-out infinite;
+  }
+  .fc1{width:260px;height:170px;top:0;right:20px;animation-delay:0s;padding:24px;}
+  .fc2{width:230px;height:140px;bottom:40px;left:0;animation-delay:-2s;padding:22px;}
+  .fc3{width:180px;height:180px;top:170px;left:60px;animation-delay:-4s;border-radius:50%;display:flex;align-items:center;justify-content:center;}
+  @keyframes bob{
+    0%,100%{transform:translateY(0) rotate(0deg);}
+    50%{transform:translateY(-16px) rotate(-1.5deg);}
+  }
+  .basket-illustration{
+    position:absolute;
+    width:100%;height:100%;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .card-amount{font-size:30px;font-weight:900;color:var(--red);letter-spacing:-0.5px;}
+  .card-label{font-size:13px;color:var(--gray);margin-top:4px;}
+  .card-icon-circle{
+    width:46px;height:46px;border-radius:50%;
+    background:var(--red-soft);
+    display:flex;align-items:center;justify-content:center;
+    margin-bottom:10px;
+  }
+
+  /* ===== SECTION GENERIC ===== */
+  section{position:relative;z-index:1;padding:110px 0;}
+  .section-tag{
+    color:var(--red);font-weight:700;font-size:13px;
+    letter-spacing:1px;text-transform:uppercase;
+    margin-bottom:14px;
+  }
+  .section-title{
+    font-size:clamp(26px,3.4vw,40px);
+    font-weight:800;letter-spacing:-0.7px;
+    margin-bottom:18px;
+    max-width:680px;
+  }
+  .section-sub{
+    color:#5C5C60;font-size:17px;max-width:600px;
+  }
+  .reveal{
+    opacity:0;transform:translateY(34px);
+    transition:opacity .8s ease, transform .8s ease;
+  }
+  .reveal.in{opacity:1;transform:translateY(0);}
+
+  /* ===== PROBLEM ===== */
+  .problem{background:var(--gray-light);border-radius:40px;margin:0 16px;}
+  .problem .container{
+    display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;
+  }
+  .problem-quote{
+    font-size:clamp(22px,2.6vw,32px);
+    font-weight:700;line-height:1.6;
+    color:var(--ink);
+  }
+  .problem-quote .strike{
+    text-decoration:line-through;
+    text-decoration-color:var(--red);
+    text-decoration-thickness:3px;
+    color:var(--gray);
+  }
+  .problem-answer{
+    margin-top:22px;
+    font-size:18px;
+    color:#4A4A4D;
+    border-right:3px solid var(--red);
+    padding-right:18px;
+  }
+  .problem-visual{
+    display:flex;align-items:center;justify-content:center;
+  }
+  .clock-card{
+    width:280px;height:280px;
+    border-radius:50%;
+    background:radial-gradient(circle at 30% 30%, #FFFFFF, #FFF3F2 70%);
+    box-shadow:var(--shadow);
+    display:flex;align-items:center;justify-content:center;
+    position:relative;
+  }
+  .clock-card .ring{
+    position:absolute;inset:18px;
+    border-radius:50%;
+    border:2px dashed rgba(232,51,42,.25);
+  }
+  .hourglass-wrap{
+    position:relative;width:90px;height:90px;
+    display:flex;align-items:center;justify-content:center;
+    cursor:pointer;
+  }
+  .hourglass-icon{
+    font-size:54px;
+    display:inline-block;
+    transition:transform 1.8s cubic-bezier(.4,0,.2,1);
+  }
+  .clock-card:hover .hourglass-icon{
+    transform:rotate(180deg);
+  }
+  .sand-grain{
+    position:absolute;top:34%;left:50%;
+    width:4px;height:4px;border-radius:50%;
+    background:var(--red);
+    opacity:0;
+    pointer-events:none;
+  }
+  .clock-card:hover .sand-grain{
+    animation:sandFall 1.3s ease-in infinite;
+  }
+  .sand-grain.g1{animation-delay:0s !important;}
+  .sand-grain.g2{animation-delay:.35s !important;left:47%;}
+  .sand-grain.g3{animation-delay:.7s !important;left:53%;}
+  @keyframes sandFall{
+    0%{opacity:0;transform:translate(-50%,-6px) scale(1);}
+    12%{opacity:1;}
+    85%{opacity:1;}
+    100%{opacity:0;transform:translate(-50%,32px) scale(.5);}
+  }
+
+  /* ===== WHAT IS IT ===== */
+  .explain{
+    display:grid;grid-template-columns:0.9fr 1.1fr;gap:60px;align-items:center;
+  }
+  .explain-card{
+    background:linear-gradient(160deg,#FFFFFF, #FFF6F5);
+    border:1px solid var(--line);
+    border-radius:28px;
+    padding:40px;
+    box-shadow:var(--shadow);
+  }
+  .explain-card .num{
+    font-size:42px;font-weight:900;color:var(--red);
+    display:block;
+  }
+  .explain-list{margin-top:30px;}
+  .explain-list div{
+    display:flex;gap:14px;align-items:flex-start;
+    padding:16px 0;
+    border-top:1px solid var(--line);
+  }
+  .explain-list div:first-child{border-top:none;}
+  .check{
+    flex:none;width:24px;height:24px;border-radius:50%;
+    background:var(--red-soft);color:var(--red);
+    display:flex;align-items:center;justify-content:center;
+    font-size:13px;font-weight:800;
+  }
+
+  /* ===== BENEFITS ===== */
+  .benefits-grid{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-top:50px;
+  }
+  .benefit-card{
+    background:var(--white);
+    border:1px solid var(--line);
+    border-radius:26px;
+    padding:32px 26px;
+    transition:transform .35s ease, box-shadow .35s ease, border-color .35s ease;
+  }
+  .benefit-card:hover{
+    transform:translateY(-8px);
+    box-shadow:var(--shadow);
+    border-color:transparent;
+  }
+  .benefit-icon{
+    width:52px;height:52px;border-radius:16px;
+    background:var(--red-soft);
+    display:flex;align-items:center;justify-content:center;
+    margin-bottom:20px;
+  }
+  .benefit-title{font-weight:700;font-size:17px;margin-bottom:8px;}
+  .benefit-text{font-size:14px;color:var(--gray);}
+  .benefit-card.big-number .benefit-title{
+    font-size:34px;font-weight:900;color:var(--red);letter-spacing:-0.5px;
+  }
+
+  /* ===== TIMELINE ===== */
+  .timeline{
+    position:relative;
+    max-width:640px;
+    margin:60px auto 0;
+  }
+  .timeline::before{
+    content:'';
+    position:absolute;
+    right:23px;top:6px;bottom:6px;
+    width:2px;
+    background:var(--line);
+  }
+  .timeline-fill{
+    position:absolute;
+    right:23px;top:6px;width:2px;
+    background:var(--red);
+    height:0%;
+    transition:height 1.4s cubic-bezier(.25,1,.4,1);
+  }
+  .t-step{
+    position:relative;
+    padding-right:64px;
+    padding-bottom:46px;
+  }
+  .t-step:last-child{padding-bottom:0;}
+  .t-dot{
+    position:absolute;right:8px;top:0;
+    width:32px;height:32px;border-radius:50%;
+    background:var(--white);
+    border:2px solid var(--line);
+    display:flex;align-items:center;justify-content:center;
+    font-weight:800;font-size:13px;color:var(--gray);
+    transition:all .5s ease;
+    z-index:2;
+  }
+  .t-step.active .t-dot{
+    border-color:var(--red);color:var(--red);background:var(--red-soft);
+  }
+  .t-title{font-weight:700;font-size:17px;margin-bottom:6px;}
+  .t-text{color:var(--gray);font-size:14.5px;}
+
+  /* ===== FAQ ===== */
+  .faq-list{max-width:760px;margin:50px auto 0;}
+  .faq-item{
+    border-bottom:1px solid var(--line);
+    padding:24px 0;
+    cursor:pointer;
+  }
+  .faq-q{
+    display:flex;justify-content:space-between;align-items:center;
+    font-weight:700;font-size:17px;
+  }
+  .faq-plus{
+    flex:none;width:28px;height:28px;border-radius:50%;
+    background:var(--gray-light);
+    display:flex;align-items:center;justify-content:center;
+    font-size:18px;color:var(--red);
+    transition:transform .35s ease, background .35s ease;
+  }
+  .faq-item.open .faq-plus{transform:rotate(45deg);background:var(--red-soft);}
+  .faq-a{
+    max-height:0;overflow:hidden;
+    transition:max-height .4s ease, padding-top .4s ease;
+    color:var(--gray);font-size:15px;line-height:1.8;
+  }
+  .faq-item.open .faq-a{max-height:220px;padding-top:14px;}
+
+  /* ===== FINAL CTA ===== */
+  .final-cta{
+    text-align:center;
+    background:linear-gradient(160deg,#1A1A1C, #2B0E0C 130%);
+    border-radius:44px;
+    margin:0 16px;
+    padding:90px 24px;
+    color:var(--white);
+    position:relative;
+    overflow:hidden;
+  }
+  .final-cta::before{
+    content:'';
+    position:absolute;
+    width:500px;height:500px;
+    background:var(--red);
+    filter:blur(120px);
+    opacity:.35;
+    border-radius:50%;
+    top:-150px;right:-100px;
+  }
+  .final-cta h2{
+    font-size:clamp(26px,3.6vw,42px);
+    font-weight:800;margin-bottom:18px;
+    position:relative;z-index:1;
+  }
+  .final-cta p{
+    color:rgba(255,255,255,.75);
+    max-width:520px;margin:0 auto 36px;
+    font-size:16px;
+    position:relative;z-index:1;
+  }
+  .final-cta .btn-primary{position:relative;z-index:1;}
+  .contact-box{
+    position:relative;z-index:1;
+    margin:40px auto 0;
+    max-width:560px;
+    display:flex;align-items:center;
+    background:rgba(255,255,255,.06);
+    border:1px solid rgba(255,255,255,.14);
+    backdrop-filter:blur(10px);
+    border-radius:20px;
+    padding:22px 28px;
+    gap:18px;
+  }
+  .contact-item{
+    flex:1;display:flex;align-items:center;gap:12px;
+    text-align:right;
+  }
+  .contact-icon{font-size:20px;flex:none;}
+  .contact-label{font-size:12.5px;color:rgba(255,255,255,.55);margin-bottom:4px;}
+  .contact-value{font-size:15px;font-weight:700;color:#fff;}
+  .contact-divider{width:1px;align-self:stretch;background:rgba(255,255,255,.15);}
+  .urgency-note{
+    position:relative;z-index:1;
+    margin-top:22px;
+    font-size:13.5px;
+    color:var(--red);
+    background:rgba(232,51,42,.12);
+    display:inline-flex;align-items:center;gap:6px;
+    padding:9px 18px;border-radius:100px;
+    font-weight:600;
+  }
+  @media (max-width:560px){
+    .contact-box{flex-direction:column;align-items:stretch;}
+    .contact-divider{width:auto;height:1px;}
+  }
+
+  .footer-contact{
+    display:flex;justify-content:center;gap:28px;
+    flex-wrap:wrap;
+    margin-bottom:14px;
+    font-size:13.5px;
+    color:#5C5C60;
+  }
+  .footer-contact span{display:inline-flex;align-items:center;gap:6px;}
+
+  /* ===== FOOTER ===== */
+  footer{
+    padding:50px 0;
+    text-align:center;
+    color:var(--gray);
+    font-size:13px;
+  }
+
+  /* counters */
+  .count-up{font-variant-numeric:tabular-nums;}
+
+  /* ===== BIG COUNTDOWN ===== */
+  .big-timer{
+    position:relative;
+    min-height:58vh;
+    display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(160deg,#1A1A1C, #2B0E0C 130%);
+    color:var(--white);
+    border-radius:44px;
+    margin:0 16px;
+    padding:70px 24px;
+    overflow:hidden;
+    z-index:1;
+  }
+  .big-timer::before{
+    content:'';
+    position:absolute;
+    width:560px;height:560px;
+    background:var(--red);
+    filter:blur(130px);
+    opacity:.35;
+    border-radius:50%;
+    top:-180px;left:-120px;
+  }
+  .bt-tag{
+    display:inline-block;
+    background:rgba(232,51,42,.2);
+    color:#FFC2BD;
+    font-weight:800;font-size:15px;
+    padding:10px 22px;border-radius:100px;
+    margin-bottom:22px;
+  }
+  .bt-title{
+    font-size:clamp(24px,3.4vw,40px);
+    font-weight:800;
+    margin-bottom:46px;
+    max-width:680px;
+    margin-left:auto;margin-right:auto;
+  }
+  .bt-countdown{
+    display:flex;align-items:center;justify-content:center;
+    gap:16px;flex-wrap:wrap;
+    margin-bottom:40px;
+  }
+  .bt-unit{
+    display:flex;flex-direction:column;align-items:center;
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.16);
+    border-radius:22px;
+    padding:24px 30px;
+    min-width:110px;
+    backdrop-filter:blur(8px);
+  }
+  .bt-num{
+    font-size:clamp(38px,6.5vw,68px);
+    font-weight:900;
+    font-variant-numeric:tabular-nums;
+    color:#fff;
+    line-height:1;
+  }
+  .bt-label{
+    font-size:14px;color:rgba(255,255,255,.6);
+    margin-top:10px;font-weight:600;
+  }
+  .bt-sep{
+    font-size:36px;font-weight:800;
+    color:rgba(255,255,255,.3);
+    align-self:center;
+    margin-bottom:18px;
+  }
+  .bt-phone{
+    font-size:17px;color:rgba(255,255,255,.85);
+    font-weight:500;
+  }
+  .bt-phone a{
+    color:#FF8983;font-weight:800;
+  }
+  @media (max-width:640px){
+    .bt-sep{display:none;}
+    .bt-unit{min-width:80px;padding:18px 16px;}
+  }
+
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width:880px){
+    .hero-inner{grid-template-columns:1fr;}
+    .hero-visual{height:320px;order:-1;}
+    .problem .container{grid-template-columns:1fr;}
+    .problem-visual{order:-1;}
+    .explain{grid-template-columns:1fr;}
+    .benefits-grid{grid-template-columns:repeat(2,1fr);}
+    .final-cta{margin:0 8px;padding:60px 20px;border-radius:32px;}
+  }
+  @media (max-width:520px){
+    .benefits-grid{grid-template-columns:1fr;}
+    section{padding:70px 0;}
+    .hero{padding-top:130px;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important;animation-iteration-count:1 !important;transition-duration:0.01ms !important;}
+  }
+</style>
+</head>
+<body>
+
+<div class="blob blob1"></div>
+<div class="blob blob2"></div>
+<div class="blob blob3"></div>
+
+<div class="top-bar">هایپر هم‌همه</div>
+
+<nav id="nav">
+  <div class="container nav-inner">
+    <div class="logo"><span class="logo-dot"></span>هم‌همه</div>
+    <a href="#cta" class="nav-cta">آشنایی بیشتر</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container hero-inner">
+    <div>
+      <div class="eyebrow">⏳ فرصت محدود · فقط در هایپر هم‌همه</div>
+      <h1 class="hero-title">بعضی خریدها،<br>وقت <span class="accent">صبر کردن</span> ندارن.</h1>
+      <p class="hero-text">گاهی لازم نیست خریدت منتظر روز حقوق بمونه. اعتبار هم‌همه اومده تا اگه شرایطش رو داشته باشی، خریدت راحت‌تر انجام بشه؛ این امکان فقط در هایپر هم‌همه فعاله و در شعبه‌های دیگه قابل استفاده نیست.</p>
+      <div class="hero-ctas">
+        <a href="#cta" class="btn-primary pulse">بیشتر آشنا شو</a>
+        <a href="#explain" class="btn-ghost">یعنی چی؟ ←</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="float-card fc1">
+        <div class="card-icon-circle">🛒</div>
+        <div class="card-amount count-up" data-count="25000000">۰</div>
+        <div class="card-label">تومان اعتبار خرید</div>
+      </div>
+      <div class="float-card fc2">
+        <div class="card-icon-circle">✓</div>
+        <div style="font-weight:700;font-size:17px;">پرداخت در دو مرحله</div>
+      </div>
+      <div class="float-card fc3">
+        <div style="text-align:center;">
+          <div style="font-size:38px;">🏪</div>
+          <div style="font-size:14px;color:var(--gray);margin-top:6px;font-weight:600;">فقط هایپر هم‌همه</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BIG COUNTDOWN -->
+<section class="big-timer">
+  <div class="container" style="text-align:center;position:relative;z-index:1;">
+    <div class="bt-tag">⏳ فرصت محدود</div>
+    <h2 class="bt-title">فقط تا پایان این شمارش معکوس فرصت داری</h2>
+    <div class="bt-countdown">
+      <div class="bt-unit"><span class="bt-num" id="bigDays">۰۰</span><span class="bt-label">روز</span></div>
+      <div class="bt-sep">:</div>
+      <div class="bt-unit"><span class="bt-num" id="bigHours">۰۰</span><span class="bt-label">ساعت</span></div>
+      <div class="bt-sep">:</div>
+      <div class="bt-unit"><span class="bt-num" id="bigMinutes">۰۰</span><span class="bt-label">دقیقه</span></div>
+      <div class="bt-sep">:</div>
+      <div class="bt-unit"><span class="bt-num" id="bigSeconds">۰۰</span><span class="bt-label">ثانیه</span></div>
+    </div>
+    <div class="bt-phone">📞 برای اطلاعات بیشتر تماس بگیر: <a href="tel:04444480785" dir="ltr">044-44480785</a></div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="problem">
+  <div class="container">
+    <div class="reveal">
+      <div class="problem-quote">
+        تا حالا شده خریدت رو <span class="strike">فقط به‌خاطر حقوق</span> عقب بندازی؟
+      </div>
+      <div class="problem-answer">
+        این دقیقاً همون چیزیه که می‌خوایم تغییرش بدیم.
+      </div>
+    </div>
+    <div class="problem-visual reveal">
+      <div class="clock-card">
+        <div class="ring"></div>
+        <div class="hourglass-wrap">
+          <div class="hourglass-icon">⏳</div>
+          <span class="sand-grain g1"></span>
+          <span class="sand-grain g2"></span>
+          <span class="sand-grain g3"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT IS IT -->
+<section id="explain">
+  <div class="container explain">
+    <div class="reveal">
+      <div class="section-tag" style="font-size:22px;font-weight:800;color:var(--ink);text-transform:none;letter-spacing:0;">اعتبار هم‌همه چیه؟</div>
+      <h2 class="section-title">یه راه ساده برای خرید.</h2>
+      <p class="section-sub">اعتبار هم‌همه یعنی اگه شرایطش رو داشته باشی، می‌تونی خریدت رو انجام بدی و هزینه‌ش رو در چند مرحله پرداخت کنی. بدون پیچیدگی، بدون مدارک عجیب.</p>
+      <div style="margin-top:22px;display:inline-flex;align-items:center;gap:10px;background:var(--red-soft);border-radius:14px;padding:14px 18px;">
+        <span style="font-size:18px;">📍</span>
+        <span style="font-size:14.5px;font-weight:600;color:var(--red-deep);">این امکان فقط در هایپر هم‌همه فعاله و در شعبه‌های دیگه ارائه نمیشه.</span>
+      </div>
+    </div>
+    <div class="explain-card reveal">
+      <span style="font-weight:800;font-size:20px;color:var(--red);">مزایایی که هم‌همه بهت میده</span>
+      <div class="explain-list">
+        <div><span class="check">✓</span><span>خرید از هایپر هم‌همه، همین امروز</span></div>
+        <div><span class="check">✓</span><span>پرداخت هزینه در چند مرحله ساده</span></div>
+        <div><span class="check">✓</span><span>بررسی سریع و بدون پیچیدگی</span></div>
+        <div><span class="check">✓</span><span>راهنمایی کامل توسط همکاران هایپر</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BENEFITS -->
+<section>
+  <div class="container">
+    <div class="reveal" style="text-align:center;">
+      <div class="section-tag" style="display:inline-block;">مزایا</div>
+      <h2 class="section-title" style="margin:0 auto;">چرا باید اعتبار هم‌همه رو امتحان کنی؟</h2>
+    </div>
+    <div class="benefits-grid">
+      <div class="benefit-card reveal">
+        <div class="benefit-icon">🛍️</div>
+        <div class="benefit-title">خرید راحت‌تر</div>
+        <div class="benefit-text">بدون نیاز به منتظر موندن برای روز حقوق.</div>
+      </div>
+      <div class="benefit-card big-number reveal">
+        <div class="benefit-icon">💳</div>
+        <div class="benefit-title"><span class="count-up" data-count="25000000">۰</span></div>
+        <div class="benefit-text">تومان اعتبار خرید</div>
+      </div>
+      <div class="benefit-card reveal">
+        <div class="benefit-icon">📆</div>
+        <div class="benefit-title" style="font-size:19px;">پرداخت در دو مرحله</div>
+        <div class="benefit-text">هزینه‌ت رو راحت‌تر مدیریت کن.</div>
+      </div>
+      <div class="benefit-card reveal">
+        <div class="benefit-icon">⚡</div>
+        <div class="benefit-title">مراحل ساده</div>
+        <div class="benefit-text">بدون پیچیدگی، با راهنمایی کامل.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section style="background:var(--gray-light);border-radius:40px;margin:0 16px;">
+  <div class="container">
+    <div class="reveal" style="text-align:center;">
+      <div class="section-tag" style="display:inline-block;">مراحل استفاده</div>
+      <h2 class="section-title" style="margin:0 auto;">از همین حالا تا خرید، فقط چند قدم.</h2>
+    </div>
+    <div class="timeline" id="timeline">
+      <div class="timeline-fill" id="timelineFill"></div>
+      <div class="t-step"><div class="t-dot">۱</div><div class="t-title">ثبت اطلاعات اولیه</div><div class="t-text">چند اطلاعات ساده رو با همکاران هایپر در میون بذار.</div></div>
+      <div class="t-step"><div class="t-dot">۲</div><div class="t-title">بررسی شرایط</div><div class="t-text">شرایطت سریع بررسی میشه، بدون معطلی.</div></div>
+      <div class="t-step"><div class="t-dot">۳</div><div class="t-title">تکمیل مدارک</div><div class="t-text">مدارک لازم رو همون‌جا تکمیل می‌کنی.</div></div>
+      <div class="t-step"><div class="t-dot">۴</div><div class="t-title">دریافت اعتبار خرید</div><div class="t-text">اعتبارت فعال میشه و آماده استفاده‌ست.</div></div>
+      <div class="t-step"><div class="t-dot">۵</div><div class="t-title">خرید از هایپر هم‌همه</div><div class="t-text">حالا وقتشه؛ خریدت رو با خیال راحت از هایپر هم‌همه انجام بده.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section>
+  <div class="container">
+    <div class="reveal" style="text-align:center;">
+      <div class="section-tag" style="display:inline-block;">سؤالات متداول</div>
+      <h2 class="section-title" style="margin:0 auto;">پاسخ به پرسش‌های شما</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item reveal">
+        <div class="faq-q">آیا میتونم از این اعتبار توی هر شعبه‌ای استفاده کنم؟<span class="faq-plus">+</span></div>
+        <div class="faq-a">نه، اعتبار هم‌همه فقط مخصوص هایپر هم‌همه‌ست و در شعبه‌های دیگه فعال نیست. برای استفاده حتماً باید به هایپر مراجعه کنی.</div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q">آیا اعتبار هم‌همه برای همه فعاله؟<span class="faq-plus">+</span></div>
+        <div class="faq-a">شرایط بسته به هر فرد متفاوته. کافیه به بخش امور مشتریان مراجعه کنی تا سریع بررسی بشه برات فعاله یا نه.</div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q">مدارک پیچیده‌ای نیاز دارم؟<span class="faq-plus">+</span></div>
+        <div class="faq-a">نه، مراحل ساده طراحی شده و همکاران هایپر کنارت هستن تا همه چیز رو راحت پیش ببری.</div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q">باید همین الان خرید کنم؟<span class="faq-plus">+</span></div>
+        <div class="faq-a">نه، فقط کافیه برای آشنایی بیشتر به نزدیک‌ترین شعبه هم‌همه مراجعه کنی، بدون هیچ فشاری.</div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q">آیا این طرح مثل وام بانکیه؟<span class="faq-plus">+</span></div>
+        <div class="faq-a">نه، اعتبار هم‌همه یه امکان خرید سریع و ساده از هایپره، نه یه فرآیند بانکی پیچیده.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section id="cta">
+  <div class="container">
+    <div class="final-cta reveal">
+      <h2>آماده‌ای قانون جدید خرید رو از نزدیک ببینی؟</h2>
+      <p>همکاران ما در بخش امور مشتریان همه چیز رو برات توضیح میدن و اگه شرایطش رو داشته باشی، ادامه مراحل همون‌جا انجام میشه. توجه داشته باش که این امکان فقط در هایپر هم‌همه فعاله، در شعبه‌های دیگه قابل استفاده نیست و فرصت استفاده از اون محدوده.</p>
+      <a href="#" class="btn-primary pulse">مراجعه به هایپر هم‌همه</a>
+
+      <div class="contact-box reveal">
+        <div class="contact-item">
+          <span class="contact-icon">📍</span>
+          <div>
+            <div class="contact-label">آدرس هایپر هم‌همه</div>
+            <div class="contact-value">کمربندی میدان امام به جانبازان، بهارنارنج ۲۰</div>
+          </div>
+        </div>
+        <div class="contact-divider"></div>
+        <div class="contact-item">
+          <span class="contact-icon">📞</span>
+          <div>
+            <div class="contact-label">تماس با امور مشتریان</div>
+            <div class="contact-value" dir="ltr"><a href="tel:04444480785" style="color:inherit;">044-44480785</a></div>
+          </div>
+        </div>
+      </div>
+      <div class="urgency-note">⏳ فرصت استفاده از اعتبار هم‌همه محدوده — همین حالا اقدام کن.</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-contact">
+      <span>📍 کمربندی میدان امام به جانبازان، بهارنارنج ۲۰</span>
+      <span dir="ltr">📞 امور مشتریان: 044-44480785</span>
+    </div>
+    © هم‌همه — همیشه یه راه ساده‌تر هست.
+  </div>
+</footer>
+
+<script>
+  // nav scroll state
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 30);
+  });
+
+  // scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting){
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => io.observe(el));
+
+  // count up
+  function toFarsiDigits(n){
+    const f = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
+    return String(n).split('').map(d => f[d] ?? d).join('');
+  }
+  function formatNumber(n){
+    return toFarsiDigits(n.toLocaleString('en-US'));
+  }
+  const counters = document.querySelectorAll('.count-up');
+  const cIo = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting){
+        const el = e.target;
+        const target = parseInt(el.dataset.count, 10);
+        let cur = 0;
+        const step = Math.max(1, Math.round(target/40));
+        const t = setInterval(() => {
+          cur += step;
+          if(cur >= target){ cur = target; clearInterval(t); }
+          el.textContent = formatNumber(cur);
+        }, 30);
+        cIo.unobserve(el);
+      }
+    });
+  }, { threshold: 0.4 });
+  counters.forEach(c => cIo.observe(c));
+
+  // timeline fill + step activation
+  const timeline = document.getElementById('timeline');
+  const fill = document.getElementById('timelineFill');
+  const steps = document.querySelectorAll('.t-step');
+  window.addEventListener('scroll', () => {
+    const rect = timeline.getBoundingClientRect();
+    const vh = window.innerHeight;
+    const total = rect.height;
+    const visible = Math.min(Math.max(vh*0.75 - rect.top, 0), total);
+    const pct = Math.min(100, (visible/total)*100);
+    fill.style.height = pct + '%';
+    steps.forEach((s, i) => {
+      const stepPct = (i/(steps.length-1))*100;
+      s.classList.toggle('active', pct >= stepPct - 5);
+    });
+  });
+
+  // countdown timer: 6 days from today
+  const countdownEnd = new Date();
+  countdownEnd.setDate(countdownEnd.getDate() + 6);
+  countdownEnd.setHours(23, 59, 59, 999);
+
+  function pad2(n){ return toFarsiDigits(String(n).padStart(2,'0')); }
+
+  function updateCountdown(){
+    const now = new Date();
+    let diff = countdownEnd - now;
+    if(diff < 0) diff = 0;
+    const days = Math.floor(diff / (1000*60*60*24));
+    const hours = Math.floor((diff / (1000*60*60)) % 24);
+    const minutes = Math.floor((diff / (1000*60)) % 60);
+    const seconds = Math.floor((diff / 1000) % 60);
+
+    const dEl = document.getElementById('bigDays');
+    const hEl = document.getElementById('bigHours');
+    const mEl = document.getElementById('bigMinutes');
+    const sEl = document.getElementById('bigSeconds');
+    if(dEl) dEl.textContent = pad2(days);
+    if(hEl) hEl.textContent = pad2(hours);
+    if(mEl) mEl.textContent = pad2(minutes);
+    if(sEl) sEl.textContent = pad2(seconds);
+  }
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+
+  // FAQ accordion
+  document.querySelectorAll('.faq-item').forEach(item => {
+    item.addEventListener('click', () => {
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if(!isOpen) item.classList.add('open');
+    });
+  });
+</script>
+
+</body>
+</html>
